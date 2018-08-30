@@ -1,0 +1,20 @@
+{
+  "name": "protractor-creative-process",
+  "version": "1.0.0",
+  "description": "sample project for knowledge sharing",
+  "main": "protractor.conf.js",
+  "scripts": {
+    "test": "webdriver-manager update && protractor"
+  },
+  "keywords": [
+    "protractor",
+    "e2e",
+    "testing"
+  ],
+  "author": "Walmyr Filho <wlsf82@gmail.com> (http://walmyr-filho.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "jasmine-spec-reporter": "^4.2.1",
+    "protractor": "^5.4.0"
+  }
+}
