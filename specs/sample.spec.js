@@ -85,7 +85,7 @@ describe('Hackernews kind off app', () => {
     searchButton.click();
 
     // Assertion
-    expect(loadingElement.isPresence()).not.toBe(true);
+    expect(loadingElement.isPresent()).not.toBe(true);
   });
 
   it('shows only 99 items after dismissing one item', () => {
