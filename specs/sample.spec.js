@@ -1,5 +1,4 @@
-const EC = protractor.ExpectedConditions;
-const DEFAULT_TIMEOUT_IN_MS = 5000;
+const helper = require('protractor-helper');
 
 describe('Hackernews kind off app', () => {
   // Test's pre-condition
@@ -12,8 +11,8 @@ describe('Hackernews kind off app', () => {
     const tableElements = element.all(by.css('.table .table-row'));
 
     // Wait for elements before assertion
-    browser.wait(EC.visibilityOf(tableElements.first()), DEFAULT_TIMEOUT_IN_MS);
-    browser.wait(EC.visibilityOf(tableElements.last()), DEFAULT_TIMEOUT_IN_MS);
+    helper.waitForElementVisibility(tableElements.first());
+    helper.waitForElementVisibility(tableElements.last());
 
     // Assertion
     expect(tableElements.count()).toBe(100);
@@ -24,14 +23,11 @@ describe('Hackernews kind off app', () => {
     const moreButton = element(by.css('.interactions button[type="button"]'));
     const loadingElement = element(by.className('loading'));
 
-    // Wait for element before action
-    browser.wait(EC.visibilityOf(moreButton), DEFAULT_TIMEOUT_IN_MS);
-
-    // Action
-    moreButton.click();
+    // Clicks in the element when it is clickable
+    helper.clickWhenClickable(moreButton);
 
     // Wait for element as assertion
-    browser.wait(EC.visibilityOf(loadingElement), DEFAULT_TIMEOUT_IN_MS);
+    helper.waitForElementVisibility(loadingElement);
   });
 
   it('renders 200 items after clicking the More button', () => {
@@ -39,22 +35,19 @@ describe('Hackernews kind off app', () => {
     const moreButton = element(by.css('.interactions button[type="button"]'));
     const loadingElement = element(by.className('loading'));
 
-    // Wait for element before action
-    browser.wait(EC.visibilityOf(moreButton), DEFAULT_TIMEOUT_IN_MS);
-
-    // Action
-    moreButton.click();
+    // Clicks in the element when it is clickable
+    helper.clickWhenClickable(moreButton);
 
     // Wait for element to change state before defining the element that will be used on assertion
-    browser.wait(EC.visibilityOf(loadingElement), DEFAULT_TIMEOUT_IN_MS);
-    browser.wait(EC.stalenessOf(loadingElement), DEFAULT_TIMEOUT_IN_MS);
+    helper.waitForElementVisibility(loadingElement);
+    helper.waitForElementNotToBePresent(loadingElement);
 
     // Element definition
     const tableElements = element.all(by.css('.table .table-row'));
 
     // Wait for elements before assertion
-    browser.wait(EC.visibilityOf(tableElements.first()), DEFAULT_TIMEOUT_IN_MS);
-    browser.wait(EC.visibilityOf(tableElements.last()), DEFAULT_TIMEOUT_IN_MS);
+    helper.waitForElementVisibility(tableElements.first());
+    helper.waitForElementVisibility(tableElements.last());
 
     // Assertion
     expect(tableElements.count()).toBe(200);
@@ -66,17 +59,13 @@ describe('Hackernews kind off app', () => {
     const searchButton = element(by.css('.interactions button[type="submit"]'))
     const loadingElement = element(by.className('loading'));
 
-    // Wait for elements before actions
-    browser.wait(EC.visibilityOf(searchInputTextField), DEFAULT_TIMEOUT_IN_MS);
-    browser.wait(EC.visibilityOf(searchButton), DEFAULT_TIMEOUT_IN_MS);
-
     // Actions
-    searchInputTextField.clear();
-    searchInputTextField.sendKeys('react');
-    searchButton.click();
+    helper.clearFieldWhenVisible(searchInputTextField);
+    helper.fillFieldWithTextWhenVisible(searchInputTextField, 'react');
+    helper.clickWhenClickable(searchButton);
 
     // Wait for element as assertion
-    browser.wait(EC.visibilityOf(loadingElement), DEFAULT_TIMEOUT_IN_MS);
+    helper.waitForElementVisibility(loadingElement);
   });
 
   it('renders 100 items after searching for the word "react" for the first time', () => {
@@ -85,18 +74,14 @@ describe('Hackernews kind off app', () => {
     const searchButton = element(by.css('.interactions button[type="submit"]'))
     const loadingElement = element(by.className('loading'));
 
-    // Wait for elements before actions
-    browser.wait(EC.visibilityOf(searchInputTextField), DEFAULT_TIMEOUT_IN_MS);
-    browser.wait(EC.visibilityOf(searchButton), DEFAULT_TIMEOUT_IN_MS);
-
     // Actions
-    searchInputTextField.clear();
-    searchInputTextField.sendKeys('react');
-    searchButton.click();
+    helper.clearFieldWhenVisible(searchInputTextField);
+    helper.fillFieldWithTextWhenVisible(searchInputTextField, 'react');
+    helper.clickWhenClickable(searchButton);
 
     // Wait for element to change state before defining the element that will be used on assertion
-    browser.wait(EC.visibilityOf(loadingElement), DEFAULT_TIMEOUT_IN_MS);
-    browser.wait(EC.stalenessOf(loadingElement), DEFAULT_TIMEOUT_IN_MS);
+    helper.waitForElementVisibility(loadingElement);
+    helper.waitForElementNotToBePresent(loadingElement);
 
     // Element definition
     const tableElements = element.all(by.css('.table .table-row'));
@@ -111,36 +96,29 @@ describe('Hackernews kind off app', () => {
     const searchButton = element(by.css('.interactions button[type="submit"]'))
     const loadingElement = element(by.className('loading'));
 
-    // Wait for elements before actions
-    browser.wait(EC.visibilityOf(searchInputTextField), DEFAULT_TIMEOUT_IN_MS);
-    browser.wait(EC.visibilityOf(searchButton), DEFAULT_TIMEOUT_IN_MS);
-
     // Actions
-    searchInputTextField.clear();
-    searchInputTextField.sendKeys('react');
-    searchButton.click();
+    helper.clearFieldWhenVisible(searchInputTextField);
+    helper.fillFieldWithTextWhenVisible(searchInputTextField, 'react');
+    helper.clickWhenClickable(searchButton);
 
     // Wait for element to change state before interacting with other elements.
-    browser.wait(EC.visibilityOf(loadingElement), DEFAULT_TIMEOUT_IN_MS);
-    browser.wait(EC.stalenessOf(loadingElement), DEFAULT_TIMEOUT_IN_MS);
+    helper.waitForElementVisibility(loadingElement);
+    helper.waitForElementNotToBePresent(loadingElement);
 
-    searchInputTextField.clear();
-    searchInputTextField.sendKeys('redux');
-    searchButton.click();
+    helper.clearFieldWhenVisible(searchInputTextField);
+    helper.fillFieldWithTextWhenVisible(searchInputTextField, 'redux');
+    helper.clickWhenClickable(searchButton);
 
     // Wait for element as assertion
-    browser.wait(EC.stalenessOf(loadingElement), DEFAULT_TIMEOUT_IN_MS);
+    helper.waitForElementNotToBePresent(loadingElement);
   });
 
   it('shows only 99 items after dismissing one item', () => {
     // Element definition
     const dismissButtonOfFirstItem = element.all(by.css('.table-row .button-inline')).first();
 
-    // Wait for element before action
-    browser.wait(EC.visibilityOf(dismissButtonOfFirstItem), DEFAULT_TIMEOUT_IN_MS);
-
     // Action
-    dismissButtonOfFirstItem.click();
+    helper.clickWhenClickable(dismissButtonOfFirstItem)
 
     // Element definition
     const tableElements = element.all(by.css('.table .table-row'));
