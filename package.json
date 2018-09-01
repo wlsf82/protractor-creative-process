@@ -4,7 +4,8 @@
   "description": "sample project for knowledge sharing",
   "main": "protractor.conf.js",
   "scripts": {
-    "test": "webdriver-manager update && protractor"
+    "test": "webdriver-manager update && protractor",
+    "test:firefox": "webdriver-manager update && protractor firefox.conf.js"
   },
   "keywords": [
     "protractor",
