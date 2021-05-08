@@ -1,5 +1,7 @@
 # Protractor create process
 
+⚠️ **This project has been deprecated.** ⚠️
+
 This is a sample project used for teaching purpose.
 
 ## Installation
